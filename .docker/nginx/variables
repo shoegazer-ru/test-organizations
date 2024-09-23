@@ -1,0 +1,4 @@
+map $PUBLIC_ROOT $public_root {
+  default "$PUBLIC_ROOT";
+  '' "/var/www/html";
+}

@@ -1,0 +1,27 @@
+services:
+    nginx:
+        image: nginx:1.25
+        ports:
+            - "8310:80"
+        volumes:
+            - /etc/localtime:/etc/localtime
+            - .docker/nginx/conf.d:/etc/nginx/conf.d
+            - .docker/nginx/variables:/etc/nginx/templates/10-variables.conf.template:ro
+            - ./:/var/www/html
+        restart: always
+        environment:
+            PUBLIC_ROOT: /var/www/html/public
+        links:
+            - php:php_fpm_sock
+        depends_on:
+            - php
+
+    php:
+        build:
+            context: .
+            dockerfile: .docker/php8/Dockerfile
+        volumes:
+            - /etc/localtime:/etc/localtime
+            - ./:/var/www/html
+            - .docker/php8/config.d:/usr/local/etc/php/config.d
+        restart: always
