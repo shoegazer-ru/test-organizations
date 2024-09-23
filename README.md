@@ -1,1 +1,1 @@
-# tests-organizations
+# test-organizations
